@@ -61,6 +61,6 @@ Canterbury corpus:  http://corpus.canterbury.ac.nz/
 Background
 -------------
 
-This project started during my Master's thesis at Saarland University in winter 2012/13. The resulsts are published in the following paper:
+This project started during my Master's thesis at Saarland University in winter 2012/13. The results are published in the following paper:
 
 [An Effective Heuristic for the Smallest Grammar Problem](http://dl.acm.org/citation.cfm?id=2463441). Florian Benz and Timo Kötzing. GECCO '13: Proceedings of the 15th International Conference on Genetic and Evolutionary Computation 
