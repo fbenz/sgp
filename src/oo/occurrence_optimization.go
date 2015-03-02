@@ -238,6 +238,38 @@ func (file *File) ScoreExtended(choice []bool, ntIds []int) ([]uint32, int) {
 	return result, len(result) + 1
 }
 
+func (file *File) PlainReconstruction(choice []bool) []uint32 {
+	result := make([]uint32, 0, file.Size)
+
+	// create a numberin table so that the used non-terminals are
+	// numbered 0 to (number of non-terminals used) - 1
+	ntNumbering := make([]int, file.NtCount)
+	number := 1
+	for i, c := range choice {
+		if c {
+			ntNumbering[i] = number
+			number++
+		} else {
+			ntNumbering[i] = -1
+		}
+	}
+
+	curNtData := file.ShortestPath(choice, -1, ntNumbering)
+	copy(result, curNtData)
+	result = append(result, curNtData...)
+
+	for j, c := range choice {
+		if c {
+			curNtData = file.ShortestPath(choice, j, ntNumbering)
+			result = append(result, 256) // seperator
+			result = append(result, curNtData...)
+		}
+	}
+
+	// returns complete encoded result
+	return result
+}
+
 func (file *File) ScoreWithReconstruction(currentChoice []bool) ([]byte, int) {
 	ntIds := make([]int, file.NtCount)
 	result, _ := file.ScoreExtended(currentChoice, ntIds)

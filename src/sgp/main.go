@@ -352,8 +352,7 @@ func printGrammar(file *oo.File, choice []bool) {
 	if !FlagPrintGrammar {
 		return
 	}
-	ntIds := make([]int, file.NtCount)
-	result, _ := file.ScoreExtended(choice, ntIds)
+	result := file.PlainReconstruction(choice)
 	ntCounter := 0
 	fmt.Printf("%d -> ", ntCounter)
 	for _, r := range result {
