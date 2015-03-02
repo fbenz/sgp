@@ -51,7 +51,7 @@ Run the hybrid
 
 Any result can easily be checked for correctness with a separate small checker. The checker is an independent programm that has less than 200 lines of code. Thus, the implementation fulfills the requirements of a [Certifying Algorithm](http://people.mpi-inf.mpg.de/~mehlhorn/ftp/CertifyingAlgorithms.pdf). The choice of nonterminals is used as a compact way of storing grammars and also plays the role of the witness:
 
-    checker --f <input file> --g <grammar (choice of nonterminals) to verify> -s <grammar size>
+    checker --f <input file> --g <grammar to verify> -s <grammar size>
 
 Resources
 -------------

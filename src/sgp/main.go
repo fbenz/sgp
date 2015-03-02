@@ -305,13 +305,6 @@ func copyChoice(solution *oo.Solution) []bool {
 	return choiceCopy
 }
 
-// Writes the given solution to the output file determined by the input file name.
-func saveResult(file *oo.File, encodedSolution *EncodedSolution) {
-	ioutil.WriteFile(file.Name+".out", encodedSolution.Bytes, 0600)
-	saveChoice(file, encodedSolution)
-	log.Printf("Final grammar size: %d\n", encodedSolution.Score)
-}
-
 // Writes the non-terminal choice to a file
 func saveChoice(file *oo.File, encodedSolution *EncodedSolution) {
 	size := file.NtCount/8 + 1
@@ -329,7 +322,11 @@ func saveChoice(file *oo.File, encodedSolution *EncodedSolution) {
 		numberString = "_" + strconv.Itoa(FlagGrammarNumber)
 	}
 	timestamp := strconv.Itoa(now.Year()) + "_" + padZero(int(now.Month())) + "_" + padZero(now.Day()) + "_" + padZero(now.Hour()) + "_" + padZero(now.Minute())
-	ioutil.WriteFile(file.Name+"_"+strconv.Itoa(encodedSolution.Score)+numberString+"_"+timestamp+".choice", choiceEncoded, 0600)
+	baseName := file.Name + "_" + strconv.Itoa(encodedSolution.Score) + numberString + "_" + timestamp
+	ioutil.WriteFile(baseName+".choice", choiceEncoded, 0600)
+
+	encodedBytes, _ := file.ScoreWithReconstruction(encodedSolution.Choice)
+	ioutil.WriteFile(baseName+".out", encodedBytes, 0600)
 }
 
 func padZero(i int) string {

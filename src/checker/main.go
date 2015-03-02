@@ -88,15 +88,19 @@ func main() {
 	// reconstruction of the whole text (stored in d.result).
 	d.reconstruct(startNt)
 
-	accept := size == FlagSize
-	if len(d.result) == len(file) {
+	accept := true
+	if size != FlagSize {
+		log.Printf("Expected grammar size is %d, but was %d.\n", FlagSize, size)
+	} else if len(d.result) == len(file) {
 		for i, b := range d.result {
 			if b != file[i] {
+				log.Printf("Character mismatch at index %d.\n", i+1)
 				accept = false
 				break
 			}
 		}
 	} else {
+		log.Printf("File length is %d, but grammar reconstruction yields %d.\n", len(file), len(d.result))
 		accept = false
 	}
 
